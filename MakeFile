@@ -1,0 +1,24 @@
+# The compilator and the flags
+CC = gcc
+CFLAGS = -Wall -pedantic
+
+# Directories
+SRC_DIR = src
+OBJ = obj
+EXCEC = bin/prog
+RM = rm -f
+# Source files
+SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ)/%.o,$(SRC_FILES))
+
+all:$(OBJ_FILES)
+	$(CC) $(CFLAGS) $^ -o $(EXCEC) -I include -L lib -lmingw32 -lSDL2main -lSDL2
+$(OBJ)/%.o:$(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c -o $@ $< -I include -L lib -lmingw32 -lSDL2main -lSDL2
+
+clean:
+	$(RM) *~ $(EXCEC) && clear
+oclean:
+	$(RM) $(OBJ_FILES) && clear
+fclean: clean oclean
+re: clean oclean all
