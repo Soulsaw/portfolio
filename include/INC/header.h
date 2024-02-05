@@ -5,13 +5,15 @@
 #include <stdio.h>
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
-#define TILE_SIZE 12
+#define TILE_SIZE 36
 #define MAP_WIDTH 12
 #define MAP_HEIGHT 12
 
 int handleEvent(int map[MAP_HEIGHT][MAP_WIDTH],  SDL_Point *player);
-void renderMap(SDL_Renderer *renderer, int map[MAP_HEIGHT][MAP_WIDTH], SDL_Texture* wallTexture);
-void renderPlayer(SDL_Renderer *renderer, SDL_Texture *playerTexture, int playerX, int playerY);
+void renderMap(SDL_Renderer *renderer, int map[MAP_HEIGHT][MAP_WIDTH]);
+void renderMapTexture(SDL_Renderer *renderer, int map[MAP_HEIGHT][MAP_WIDTH], SDL_Texture* wallTexture);
+void renderPlayer(SDL_Renderer *renderer, int playerX, int playerY);
+void renderPlayerTexture(SDL_Renderer *renderer, SDL_Texture *playerTexture, int playerX, int playerY);
 SDL_Texture* loadTexture(SDL_Renderer* renderer, const char* path);
 SDL_Renderer* initializeSDL();
 #endif

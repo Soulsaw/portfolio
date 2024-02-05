@@ -105,8 +105,37 @@ SDL_Texture *loadTexture(SDL_Renderer *renderer, const char *path)
     return texture;
 }
 
-void renderMap(SDL_Renderer *renderer, int map[MAP_HEIGHT][MAP_WIDTH],
-               SDL_Texture *wallTexture)
+void renderMap(SDL_Renderer *renderer, int map[MAP_HEIGHT][MAP_WIDTH])
+{
+    for (int y = 0; y < MAP_HEIGHT; ++y)
+    {
+        for (int x = 0; x < MAP_WIDTH; ++x)
+        {
+            if (map[y][x] == 1)
+            {
+                SDL_SetRenderDrawColor(renderer, 0X7F, 0X7F, 0X7F, 255);
+                SDL_Rect wallRect = {x * TILE_SIZE, y * TILE_SIZE,
+                                     TILE_SIZE - 1, TILE_SIZE - 1};
+                SDL_RenderFillRect(renderer, &wallRect);
+            }
+            else
+            {
+                SDL_SetRenderDrawColor(renderer, 0X34, 0XB1, 0X4C, 255);
+                SDL_Rect floorRect = {x * TILE_SIZE, y * TILE_SIZE,
+                                      TILE_SIZE - 1, TILE_SIZE - 1};
+                SDL_RenderFillRect(renderer, &floorRect);
+            }
+        }
+    }
+}
+
+void renderPlayer(SDL_Renderer *renderer, int playerX, int playerY)
+{
+    SDL_SetRenderDrawColor(renderer, 0XAA, 0XAA, 0XAA, SDL_ALPHA_OPAQUE);
+    SDL_Rect playerRect = {playerX, playerY, TILE_SIZE / 3, TILE_SIZE / 3};
+    SDL_RenderFillRect(renderer, &playerRect);
+}
+void renderMapTexture(SDL_Renderer *renderer, int map[MAP_HEIGHT][MAP_WIDTH], SDL_Texture* wallTexture)
 {
     SDL_Texture *floorTexture = loadTexture(renderer, "assets/floortile.png");
     if (wallTexture == NULL || floorTexture == NULL)
@@ -134,9 +163,7 @@ void renderMap(SDL_Renderer *renderer, int map[MAP_HEIGHT][MAP_WIDTH],
     }
     SDL_DestroyTexture(floorTexture);
 }
-
-void renderPlayer(SDL_Renderer *renderer, SDL_Texture *playerTexture,
-                  int playerX, int playerY)
+void renderPlayerTexture(SDL_Renderer *renderer, SDL_Texture *playerTexture, int playerX, int playerY)
 {
     SDL_Rect playerRect = {playerX, playerY, TILE_SIZE / 3, TILE_SIZE / 3};
     SDL_RenderCopy(renderer, playerTexture, NULL, &playerRect);

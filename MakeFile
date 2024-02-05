@@ -1,6 +1,6 @@
 # The compilator and the flags
 CC = gcc
-CFLAGS = -Wall -pedantic
+CFLAGS =
 
 # Directories
 SRC_DIR = src

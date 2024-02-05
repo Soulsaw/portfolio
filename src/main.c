@@ -39,10 +39,9 @@ int main(int argc, char *argv[])
         if (handleEvent(map, &player) == 1)
             quit = 1;
         SDL_RenderClear(renderer);
-        renderMap(renderer, map, wallTexture);
-        renderPlayer(renderer, playerTexture, player.x, player.y);
+        renderMap(renderer, map);
+        renderPlayer(renderer, player.x, player.y);
         SDL_RenderPresent(renderer);
-        SDL_Delay(16);
     }
     SDL_DestroyTexture(wallTexture);
     SDL_DestroyTexture(playerTexture);
