@@ -1,23 +1,4 @@
 #include "INC/header.h"
-int initInstance(SDL_Instance *instance)
-{
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
-        SDL_Log("Erreur: Initialisation de la SDL > %s\n", SDL_GetError());
-        exit(EXIT_FAILURE);
-    }
-    instance->window = SDL_CreateWindow("SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                        SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (!instance->window)
-        SDL_ExitWithError("SDL_CreateWindow");
-    instance->renderer = SDL_CreateRenderer(instance->window, -1, 0);
-    if (!instance->renderer)
-    {
-        SDL_DestroyWindow(instance->window);
-        SDL_ExitWithError("SDL_CreateRenderer");
-    }
-    return (0);
-}
 /**
  * SDL_ExitWithError - Exit the SDL with the giving error message
  * @message: The message to printout
