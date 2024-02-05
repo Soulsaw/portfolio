@@ -28,7 +28,16 @@ int SDL_ExitWithError(const char *message)
     SDL_Quit();
     return (1);
 }
-
+/**
+ * handleEvent - This function permit to move the player user the user handler
+ * Description: This function permit to push the player if the user press on the
+ * keys right
+ * @map: Is the game map
+ * \param map The game ```map```
+ * \param player The current ```player position```
+ * @player: Is the player current position
+ * Return: 0 or 1
+*/
 int handleEvent(int map[MAP_HEIGHT][MAP_WIDTH],  SDL_Point *player)
 {
     SDL_Event event;
@@ -39,22 +48,22 @@ int handleEvent(int map[MAP_HEIGHT][MAP_WIDTH],  SDL_Point *player)
             else if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
                     case SDLK_LEFT:
-                        if (player->x - TILE_SIZE >= 0 && map[player->y / TILE_SIZE][player->x / TILE_SIZE - 1] != 1) {
+                        if (player->x - TILE_SIZE >= 0 && map[player->y / TILE_SIZE][(player->x - (TILE_SIZE /3)) / TILE_SIZE] != 1) {
                             player->x -= TILE_SIZE / 3;
                         }
                         break;
                     case SDLK_RIGHT:
-                        if (player->x + TILE_SIZE < (TILE_SIZE * MAP_HEIGHT) && map[player->y / TILE_SIZE][player->x / TILE_SIZE + 1] != 1) {
+                        if (player->x + TILE_SIZE < (TILE_SIZE * MAP_HEIGHT) - (TILE_SIZE / 3) && map[player->y / TILE_SIZE][(player->x + (TILE_SIZE /3))/ TILE_SIZE] != 1) {
                             player->x += TILE_SIZE / 3;
                         }
                         break;
                     case SDLK_UP:
-                        if (player->y - TILE_SIZE >= 0 && map[player->y / TILE_SIZE - 1][player->x / TILE_SIZE] != 1) {
+                        if (player->y - TILE_SIZE >= 0 && map[(player->y - (TILE_SIZE / 3))/ TILE_SIZE][player->x / TILE_SIZE] != 1) {
                             player->y -= TILE_SIZE / 3;
                         }
                         break;
                     case SDLK_DOWN:
-                        if (player->y + TILE_SIZE < (TILE_SIZE * MAP_HEIGHT) && map[player->y / TILE_SIZE + 1][player->x / TILE_SIZE] != 1) {
+                        if (player->y < (TILE_SIZE * MAP_HEIGHT) - (TILE_SIZE / 3) && map[(player->y + (TILE_SIZE / 3))/ TILE_SIZE][player->x / TILE_SIZE] != 1) {
                             player->y += TILE_SIZE / 3;
                         }
                         break;
