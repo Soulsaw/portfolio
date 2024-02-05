@@ -101,7 +101,7 @@ void drawMap2D(SDL_Renderer *render)
                 SDL_SetRenderDrawColor(render, 97, 97, 97, SDL_ALPHA_OPAQUE);
             else
                 SDL_SetRenderDrawColor(render, 20, 150, 10, SDL_ALPHA_OPAQUE);
-            SDL_Rect rect = {.x = y * x0, .y = x * y0, .w = x0, .h = y0};
+            SDL_Rect rect = {.x = y * x0, .y = x * y0, .w = x0 - 1, .h = y0 - 1};
             SDL_RenderFillRect(render, &rect);
             SDL_RenderPresent(render);
         }

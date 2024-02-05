@@ -12,7 +12,7 @@
 int main(int ac, char **av)
 {
     SDL_Instance instance;
-    SDL_Rect rect1 = {.x = 100, .y = 100, .w = 20, .h = 20};
+    SDL_Rect rect1 = {.x = (int)(SCREEN_WIDTH / MAP_HEIGTH), .y = (int)(SCREEN_HEIGTH / MAP_HEIGTH), .w = 12, .h = 12};
     bool quit =true;
 
     if (initInstance(&instance) == 1)
@@ -20,6 +20,8 @@ int main(int ac, char **av)
     drawMap2D(instance.renderer);
     while (quit)
     {
+        SDL_SetRenderDrawColor(instance.renderer, 76, 178, 76, SDL_ALPHA_OPAQUE);
+        SDL_RenderFillRect(instance.renderer, &rect1);
         if (handleEvent(instance.renderer, &rect1) == 1)
             quit = false;
 
