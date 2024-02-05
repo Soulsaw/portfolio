@@ -1,4 +1,6 @@
 #include "INC/header.h"
+
+float pdx, pdy, pa;
 /**
  * handleEvent - This function permit to move the player user the user handler
  * Description: This function permit to push the player if the user press on the
@@ -50,6 +52,69 @@ int handleEvent(int map[MAP_HEIGHT][MAP_WIDTH], SDL_Point *player)
                                                                                  [player->x / TILE_SIZE] != 1)
                 {
                     player->y += TILE_SIZE / 3;
+                }
+                break;
+            }
+        }
+    }
+    return (0);
+}
+
+int handleEventWithAngle(int map[MAP_HEIGHT][MAP_WIDTH], SDL_Point *player, float *playerAngle, SDL_Point *point)
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event) != 0)
+    {
+        if (event.type == SDL_QUIT)
+            return (1);
+        else if (event.type == SDL_KEYDOWN)
+        {
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_a:
+                if (player->x - TILE_SIZE >=
+                        0 &&
+                    map[player->y / TILE_SIZE]
+                       [(player->x - (TILE_SIZE / 3)) / TILE_SIZE] != 1)
+                {
+                    /* player->x -= TILE_SIZE / 3; */
+                    *playerAngle -= 0.1;
+                    if (*playerAngle < 0)
+                        pa += 2*PI;
+                    point->x = cos(*playerAngle) * (TILE_SIZE / 3);
+                    point->y = sin(*playerAngle) * (TILE_SIZE / 3);
+                }
+                break;
+            case SDLK_d:
+                if (player->x + TILE_SIZE <
+                        (TILE_SIZE * MAP_HEIGHT) - (TILE_SIZE / 3) &&
+                    map[player->y / TILE_SIZE]
+                       [(player->x + (TILE_SIZE / 3)) / TILE_SIZE] != 1)
+                {
+                    /* player->x += TILE_SIZE / 3; */
+                    *playerAngle += 0.1;
+                    if (*playerAngle > 2 * PI)
+                        pa -= 2*PI;
+                    point->x = cos(*playerAngle) * (TILE_SIZE / 3);
+                    point->y = sin(*playerAngle) * (TILE_SIZE / 3);
+                }
+                break;
+            case SDLK_w:
+                if (player->y - TILE_SIZE >= 0 &&
+                    map[(player->y - (TILE_SIZE / 3)) / TILE_SIZE][player->x / TILE_SIZE] != 1)
+                {
+                    /* player->y -= TILE_SIZE / 3; */
+                    player->x += point->x;
+                    player->y += point->y;
+                }
+                break;
+            case SDLK_s:
+                if (player->y < (TILE_SIZE * MAP_HEIGHT) - (TILE_SIZE / 3) && map[(player->y + (TILE_SIZE / 3)) / TILE_SIZE]
+                                                                                 [player->x / TILE_SIZE] != 1)
+                {
+                    /* player->y += TILE_SIZE / 3; */
+                    player->x -= point->x;
+                    player->y -= point->y;
                 }
                 break;
             }
@@ -135,6 +200,19 @@ void renderPlayer(SDL_Renderer *renderer, int playerX, int playerY)
     SDL_Rect playerRect = {playerX, playerY, TILE_SIZE / 3, TILE_SIZE / 3};
     SDL_RenderFillRect(renderer, &playerRect);
 }
+
+void renderPlayerWithAngle(SDL_Renderer *renderer, int playerX, int playerY, SDL_Point point)
+{
+    SDL_SetRenderDrawColor(renderer, 0XAA, 0XAA, 0XAA, SDL_ALPHA_OPAQUE);
+    SDL_Rect playerRect = {playerX, playerY, TILE_SIZE / 3, TILE_SIZE / 3};
+    SDL_RenderFillRect(renderer, &playerRect);
+
+    // Render the short line representing player direction
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red color
+    SDL_RenderDrawLine(renderer, playerX + (TILE_SIZE / 6), playerY + (TILE_SIZE / 6), playerX + point.x * (TILE_SIZE / 3), playerY + point.y * (TILE_SIZE / 3));
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Reset color to white
+}
+
 void renderMapTexture(SDL_Renderer *renderer, int map[MAP_HEIGHT][MAP_WIDTH], SDL_Texture* wallTexture)
 {
     SDL_Texture *floorTexture = loadTexture(renderer, "assets/floortile.png");
