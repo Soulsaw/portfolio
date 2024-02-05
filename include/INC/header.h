@@ -3,23 +3,11 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include <stdio.h>
-
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
-#define TILE_SIZE 45
+#define TILE_SIZE 12
 #define MAP_WIDTH 12
 #define MAP_HEIGHT 12
-/**
- * struct SDL_Instance - The instance of the SDL
- * @window: The window to create
- * @renderer: The renderer for the draw
- *
-*/
-typedef struct SDL_Instance
-{
-SDL_Window *window;
-SDL_Renderer *renderer;
-} SDL_Instance;
 
 int initInstance(SDL_Instance *);
 int SDL_ExitWithError(const char *message);
