@@ -23,7 +23,9 @@ int main(int argc, char *argv[])
     SDL_Renderer *renderer = initializeSDL();
 
     if (renderer == NULL)
+    {
         return 1;
+    }
 
     /* Load wall and player textures */
     SDL_Texture *wallTexture = loadTexture(renderer, "assets/tile2.png");
