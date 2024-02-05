@@ -12,9 +12,9 @@ SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ)/%.o,$(SRC_FILES))
 
 all:$(OBJ_FILES)
-	$(CC) $(CFLAGS) $^ -o $(EXCEC) -I include -L lib -lmingw32 -lSDL2main -lSDL2
+	$(CC) $(CFLAGS) $^ -o $(EXCEC) -I include -L lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 $(OBJ)/%.o:$(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -c -o $@ $< -I include -L lib -lmingw32 -lSDL2main -lSDL2
+	$(CC) $(CFLAGS) -c -o $@ $< -I include -L lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 
 clean:
 	$(RM) *~ $(EXCEC) && clear

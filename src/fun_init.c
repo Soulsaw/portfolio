@@ -6,7 +6,7 @@ int initInstance(SDL_Instance *instance){
         exit(EXIT_FAILURE);
     }
     instance->window = SDL_CreateWindow("SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        SCREEN_WIDTH, SCREEN_HEIGTH, SDL_WINDOW_SHOWN);
+        SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (!instance->window)
         SDL_ExitWithError("SDL_CreateWindow");
     instance->renderer = SDL_CreateRenderer(instance->window, -1, 0);
@@ -29,88 +29,95 @@ int SDL_ExitWithError(const char *message)
     return (1);
 }
 
-int handleEvent(SDL_Renderer *render, SDL_Rect *rect)
+int handleEvent(int map[MAP_HEIGHT][MAP_WIDTH],  SDL_Point *player)
 {
     SDL_Event event;
-
-    while (SDL_PollEvent(&event))
-    {
-        if (event.type == SDL_QUIT)
-            return 1;
-        else if (event.type == SDL_KEYDOWN)
-        {
-            switch (event.key.keysym.sym)
-            {
-            case SDLK_a:
-                if (rect->x > 0)
-                {
-                    rect->x -= 5;
+        while (SDL_PollEvent(&event) != 0) {
+            if (event.type == SDL_QUIT) {
+                return (1);
+            }
+            else if (event.type == SDL_KEYDOWN) {
+                switch (event.key.keysym.sym) {
+                    case SDLK_LEFT:
+                        if (player->x - TILE_SIZE >= 0 && map[player->y / TILE_SIZE][player->x / TILE_SIZE - 1] != 1) {
+                            player->x -= TILE_SIZE / 3;
+                        }
+                        break;
+                    case SDLK_RIGHT:
+                        if (player->x + TILE_SIZE < (TILE_SIZE * MAP_HEIGHT) && map[player->y / TILE_SIZE][player->x / TILE_SIZE + 1] != 1) {
+                            player->x += TILE_SIZE / 3;
+                        }
+                        break;
+                    case SDLK_UP:
+                        if (player->y - TILE_SIZE >= 0 && map[player->y / TILE_SIZE - 1][player->x / TILE_SIZE] != 1) {
+                            player->y -= TILE_SIZE / 3;
+                        }
+                        break;
+                    case SDLK_DOWN:
+                        if (player->y + TILE_SIZE < (TILE_SIZE * MAP_HEIGHT) && map[player->y / TILE_SIZE + 1][player->x / TILE_SIZE] != 1) {
+                            player->y += TILE_SIZE / 3;
+                        }
+                        break;
                 }
-                break;
-            case SDLK_d:
-                if (rect->x < SCREEN_WIDTH)
-                {
-                    rect->x += 5;
-                }
-                break;
-            case SDLK_w:
-                if (rect->y > 0)
-                {
-                    rect->y -= 5;
-                }
-                break;
-            case SDLK_s:
-                if (rect->y < SCREEN_HEIGTH)
-                {
-                    rect->y += 5;
-                }
-                break;                                            
             }
         }
-        /**SDL_RenderFillRect(render, rect);*/
-        SDL_RenderPresent(render);
-    }
-    return (0);
+        return (0);
 }
-void drawMap2D(SDL_Renderer *render)
-{
-    int map[] =
-    {
-        1,1,1,1,1,1,1,1,1,1,1,1,
-        1,0,0,0,1,0,0,0,0,0,0,1,
-        1,0,0,0,1,0,0,1,0,0,0,1,
-        1,0,0,1,1,0,0,1,1,1,1,1,
-        1,0,0,0,0,0,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,1,
-        1,0,0,1,1,1,0,0,1,1,1,1,
-        1,0,0,0,0,0,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,1,
-        1,1,1,1,1,0,0,1,1,1,1,1
-    };
-    int x, y, x0, y0;
 
-    x0 = (int)(SCREEN_WIDTH / MAP_HEIGTH);
-    y0 = (int)(SCREEN_HEIGTH / MAP_HEIGTH);
-    for (x = 0; x < MAP_HEIGTH; x++)
-    {
-        for (y = 0; y < MAP_HEIGTH; y++)
-        {
-            if (map[y + (x * MAP_HEIGTH)] == 1)
-                SDL_SetRenderDrawColor(render, 97, 97, 97, SDL_ALPHA_OPAQUE);
+SDL_Renderer* initializeSDL() {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        fprintf(stderr, "SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+        return NULL;
+    }
+
+    SDL_Window* window = SDL_CreateWindow("SDL Player Example", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (window == NULL) {
+        fprintf(stderr, "Window could not be created! SDL_Error: %s\n", SDL_GetError());
+        SDL_Quit();
+        return NULL;
+    }
+
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (renderer == NULL) {
+        fprintf(stderr, "Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return NULL;
+    }
+
+    return renderer;
+}
+
+SDL_Texture* loadTexture(SDL_Renderer* renderer, const char* path) {
+    SDL_Texture* texture = IMG_LoadTexture(renderer, path);
+    if (texture == NULL) {
+        fprintf(stderr, "Unable to load texture! SDL_Error: %s\n", SDL_GetError());
+    }
+    return texture;
+}
+
+void renderMap(SDL_Renderer* renderer, int map[MAP_HEIGHT][MAP_WIDTH], SDL_Texture* wallTexture) {
+    SDL_Texture *floorTexture = loadTexture(renderer, "assets/floortile.png");
+    if (wallTexture == NULL || floorTexture == NULL) {
+        SDL_DestroyRenderer(renderer);
+        return;
+    }
+    for (int y = 0; y < MAP_HEIGHT; ++y) {
+        for (int x = 0; x < MAP_WIDTH; ++x) {
+            if (map[y][x] == 1) {
+                SDL_Rect wallRect = { x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE - 1, TILE_SIZE - 1 };
+                SDL_RenderCopy(renderer, wallTexture, NULL, &wallRect);
+            }
             else
-                SDL_SetRenderDrawColor(render, 20, 150, 10, SDL_ALPHA_OPAQUE);
-            SDL_Rect rect = {.x = y * x0, .y = x * y0, .w = x0 - 1, .h = y0 - 1};
-            SDL_RenderFillRect(render, &rect);
-            SDL_RenderPresent(render);
+            {
+                SDL_Rect floorRect = { x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE - 1, TILE_SIZE - 1 };
+                SDL_RenderCopy(renderer, floorTexture, NULL, &floorRect);
+            }
         }
     }
 }
 
-SDL_Surface *loadMedia()
-{
-    SDL_Surface *surface = NULL;
-
-    return (surface);
+void renderPlayer(SDL_Renderer* renderer, SDL_Texture* playerTexture, int playerX, int playerY) {
+    SDL_Rect playerRect = { playerX, playerY, TILE_SIZE / 3, TILE_SIZE / 3 };
+    SDL_RenderCopy(renderer, playerTexture, NULL, &playerRect);
 }
