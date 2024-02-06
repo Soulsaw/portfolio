@@ -3,23 +3,23 @@
 void renderPlayer(SDL_Renderer *renderer, int playerX, int playerY)
 {
     SDL_SetRenderDrawColor(renderer, 0XAA, 0XAA, 0XAA, SDL_ALPHA_OPAQUE);
-    SDL_Rect playerRect = {playerX, playerY, TILE_SIZE / 3, TILE_SIZE / 3};
+    SDL_Rect playerRect = {playerX, playerY, sqrt(TILE_SIZE), sqrt(TILE_SIZE)};
     SDL_RenderFillRect(renderer, &playerRect);
 }
 
 void renderPlayerWithAngle(SDL_Renderer *renderer, int playerX, int playerY,
-                           SDL_Point point)
+                           SDL_Point playerDirection)
 {
-    SDL_SetRenderDrawColor(renderer, 0XAA, 0XAA, 0XAA, SDL_ALPHA_OPAQUE);
-    SDL_Rect playerRect = {playerX, playerY, TILE_SIZE / 3, TILE_SIZE / 3};
+    SDL_SetRenderDrawColor(renderer, 230, 177, 0, SDL_ALPHA_OPAQUE);
+    SDL_Rect playerRect = {playerX, playerY, sqrt(TILE_SIZE), sqrt(TILE_SIZE)};
     SDL_RenderFillRect(renderer, &playerRect);
 
     /* Render the short line representing player direction */
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red color
-    SDL_RenderDrawLine(renderer, playerX + (TILE_SIZE / 6),
-                       playerY + (TILE_SIZE / 6),
-                       playerX + point.x * 3,
-                       playerY + point.y * 3);
+    SDL_SetRenderDrawColor(renderer, 230, 177, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderDrawLine(renderer, playerX + 4,
+                       playerY + 4,
+                       playerX + playerDirection.x * 5,
+                       playerY + playerDirection.y * 5);
     SDL_SetRenderDrawColor(renderer, 0X7F, 0X7F, 0X7F, SDL_ALPHA_OPAQUE);
 }
 void renderPlayerTexture(SDL_Renderer *renderer, SDL_Texture *playerTexture,
