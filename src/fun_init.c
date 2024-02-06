@@ -35,5 +35,3 @@ SDL_Renderer *initializeSDL()
 
     return renderer;
 }
-
-

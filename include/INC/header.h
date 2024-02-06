@@ -11,6 +11,8 @@
 #define MAP_WIDTH 8
 #define MAP_HEIGHT 8
 #define PI 3.1415926535897
+#define P2 PI / 2
+#define P3 3 * PI / 2
 
-SDL_Renderer* initializeSDL();
+SDL_Renderer *initializeSDL();
 #endif
