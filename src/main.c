@@ -1,4 +1,8 @@
 #include "INC/header.h"
+#include "INC/media.h"
+#include "INC/player.h"
+#include "INC/map.h"
+#include "INC/event.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,8 +33,9 @@ int main(int argc, char *argv[])
     /* Load wall and player textures */
     SDL_Texture *wallTexture = loadTexture(renderer, "assets/tile2.png");
     SDL_Texture *playerTexture = loadTexture(renderer, "assets/tile7.png");
+    SDL_Texture *floorTexture = loadTexture(renderer, "assets/floortile.png");
 
-    if (wallTexture == NULL || playerTexture == NULL)
+    if (!wallTexture || !playerTexture || !floorTexture)
     {
         SDL_DestroyRenderer(renderer);
         return 1;
