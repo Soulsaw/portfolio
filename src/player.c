@@ -16,10 +16,10 @@ void renderPlayerWithAngle(SDL_Renderer *renderer, int playerX, int playerY,
 
     /* Render the short line representing player direction */
     SDL_SetRenderDrawColor(renderer, 230, 177, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderDrawLine(renderer, playerX + 4,
-                       playerY + 4,
-                       playerX + playerDirection.x * 5,
-                       playerY + playerDirection.y * 5);
+    drawThickLine(renderer, playerX + 4,
+                  playerY + 4,
+                  playerX + playerDirection.x * 5,
+                  playerY + playerDirection.y * 5, 3);
     SDL_SetRenderDrawColor(renderer, 0X7F, 0X7F, 0X7F, SDL_ALPHA_OPAQUE);
 }
 void renderPlayerTexture(SDL_Renderer *renderer, SDL_Texture *playerTexture,

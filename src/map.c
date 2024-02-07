@@ -208,7 +208,7 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
             lineH = 320;
         }                              /* Line heigth */
         float lineO = 160 - lineH / 2; /* Line offsets */
-        drawThickLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO, 6);
+        drawThickLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO, 8);
         /* SDL_RenderDrawLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO); */
         SDL_SetRenderDrawColor(renderer, 0X7F, 0X7F, 0X7F, SDL_ALPHA_OPAQUE);
         ra += DR;

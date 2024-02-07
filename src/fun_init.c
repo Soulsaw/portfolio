@@ -40,6 +40,6 @@ void drawThickLine(SDL_Renderer *renderer, int x1, int y1, int x2, int y2, int w
 {
     for (int x = 0; x < width; x++)
     {
-        SDL_RenderDrawLine(renderer, x1 + x, y1 + x, x2 + x, y2 + x);
+        SDL_RenderDrawLine(renderer, x1 + x, y1, x2 + x, y2);
     }
 }
