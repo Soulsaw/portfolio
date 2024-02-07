@@ -189,7 +189,7 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
             disT = distH;
             SDL_SetRenderDrawColor(renderer, 63, 72, 234, 255);
         }
-        
+
         SDL_RenderDrawLine(renderer, player.x + 4, player.y + 4, rx, ry);
         /* Draw the 3D walls */
         float ca = playerAngle - ra;
@@ -208,7 +208,8 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
             lineH = 320;
         }                              /* Line heigth */
         float lineO = 160 - lineH / 2; /* Line offsets */
-        SDL_RenderDrawLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO);
+        drawThickLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO, 6);
+        /* SDL_RenderDrawLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO); */
         SDL_SetRenderDrawColor(renderer, 0X7F, 0X7F, 0X7F, SDL_ALPHA_OPAQUE);
         ra += DR;
         if (ra < 0)
