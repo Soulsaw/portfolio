@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
             quit = 1;
         SDL_RenderClear(renderer);
         renderMap(renderer, map);
-        renderPlayerWithAngle(renderer, player.x, player.y, playerDirection);
         drawRays2d(renderer, playerAngle, player, map);
+        renderPlayerWithAngle(renderer, player.x, player.y, playerDirection);
         SDL_RenderPresent(renderer);
     }
 /*     SDL_DestroyTexture(wallTexture);

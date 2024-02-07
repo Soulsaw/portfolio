@@ -16,4 +16,5 @@
 #define DR 0.0174533/* One degree in radians */
 
 SDL_Renderer *initializeSDL();
+void drawThickLine(SDL_Renderer* renderer, int x1, int y1, int x2, int y2, int width);
 #endif

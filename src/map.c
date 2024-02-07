@@ -71,7 +71,7 @@ void renderMapTexture(SDL_Renderer *renderer, int map[TILE_SIZE],
 }
 void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int map[])
 {
-    int r, mx, my, mp, dof;
+    int r, mx, my, mp, dof, disT;
     float rx, ry, ra, xo, yo;
 
     ra = playerAngle - DR * 30;
@@ -83,7 +83,7 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
     {
         ra -= 2 * PI;
     }
-    for (r = 0; r < 1; r++)
+    for (r = 0; r < 60; r++)
     {
         // Check Horizontal lines
         dof = 0;
@@ -179,14 +179,45 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
         {
             rx = vx;
             ry = vy;
+            disT = distV;
+            SDL_SetRenderDrawColor(renderer, 34, 177, 76, 255);
         }
         if (distH < distV)
         {
             rx = hx;
             ry = hy;
+            disT = distH;
+            SDL_SetRenderDrawColor(renderer, 63, 72, 234, 255);
         }
-        SDL_SetRenderDrawColor(renderer, 237, 28, 36, 255);
+        
         SDL_RenderDrawLine(renderer, player.x + 4, player.y + 4, rx, ry);
+        /* Draw the 3D walls */
+        float ca = playerAngle - ra;
+        if (ca < 0)
+        {
+            ca += 2 * PI;
+        }
+        if (ca > 2 * PI)
+        {
+            ca -= 2 * PI;
+        }
+        disT = disT * cos(ca); /* fix fisheye */
+        float lineH = (TILE_SIZE * 320) / disT;
+        if (lineH > 320)
+        {
+            lineH = 320;
+        }                              /* Line heigth */
+        float lineO = 160 - lineH / 2; /* Line offsets */
+        SDL_RenderDrawLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO);
         SDL_SetRenderDrawColor(renderer, 0X7F, 0X7F, 0X7F, SDL_ALPHA_OPAQUE);
+        ra += DR;
+        if (ra < 0)
+        {
+            ra += 2 * PI;
+        }
+        if (ra > 2 * PI)
+        {
+            ra -= 2 * PI;
+        }
     }
 }
