@@ -1,4 +1,4 @@
-#include "INC/header.h"
+#include "../headers/header.h"
 
 SDL_Renderer *initializeSDL()
 {

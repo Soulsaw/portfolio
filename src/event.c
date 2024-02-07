@@ -1,4 +1,4 @@
-#include "INC/event.h"
+#include "../headers/event.h"
 /**
  * handleEvent - This function permit to move the player user the user handler
  * Description: This function permit to push the player if the user press on the

@@ -1,10 +1,9 @@
-#include "INC/header.h"
-#include "INC/media.h"
-#include "INC/player.h"
-#include "INC/map.h"
-#include "INC/event.h"
+#include "../headers/header.h"
+#include "../headers/player.h"
+#include "../headers/map.h"
+#include "../headers/event.h"
 
-int main(int argc, char *argv[])
+int main(void)
 {
     int playerX = 2 * TILE_SIZE;/* Initial X position of the player */
     int playerY = 2 * TILE_SIZE;/* Initial Y position of the player */
@@ -22,7 +21,6 @@ int main(int argc, char *argv[])
     SDL_Renderer *renderer = initializeSDL();
     float playerAngle = 0.0;
     SDL_Point playerDirection = {cos(playerAngle) * 5, sin(playerAngle) * 5};
-   SDL_Point px ={300, 300};
 
     if (renderer == NULL)
         return 1;
@@ -36,8 +34,6 @@ int main(int argc, char *argv[])
         renderPlayerWithAngle(renderer, player.x, player.y, playerDirection);
         SDL_RenderPresent(renderer);
     }
-/*     SDL_DestroyTexture(wallTexture);
-    SDL_DestroyTexture(playerTexture); */
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
     return 0;

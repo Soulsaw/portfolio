@@ -11,10 +11,11 @@
 #define MAP_WIDTH 8
 #define MAP_HEIGHT 8
 #define PI 3.1415926535/* PI value */
-#define P2 PI / 2
-#define P3 3 * PI / 2
+#define P2 (PI / 2)
+#define P3 (3 * (PI / 2))
 #define DR 0.0174533/* One degree in radians */
 
 SDL_Renderer *initializeSDL();
-void drawThickLine(SDL_Renderer* renderer, int x1, int y1, int x2, int y2, int width);
+void drawThickLine(SDL_Renderer *renderer, int x1, int y1, int x2,
+				   int y2, int width);
 #endif

@@ -1,4 +1,4 @@
-#include "INC/player.h"
+#include "../headers/player.h"
 
 void renderPlayer(SDL_Renderer *renderer, int playerX, int playerY)
 {
@@ -22,14 +22,15 @@ void renderPlayerWithAngle(SDL_Renderer *renderer, int playerX, int playerY,
                   playerY + playerDirection.y * 5, 3);
     SDL_SetRenderDrawColor(renderer, 113, 113, 113, SDL_ALPHA_OPAQUE);
 }
-void renderPlayerTexture(SDL_Renderer *renderer, SDL_Texture *playerTexture,
-                         int playerX, int playerY)
-{
-    SDL_Rect playerRect = {playerX, playerY, TILE_SIZE / 3, TILE_SIZE / 3};
-    SDL_RenderCopy(renderer, playerTexture, NULL, &playerRect);
-}
-
-float dist(float ax, float ay, float bx, float by, float angle)
+/**
+ * dist - This function claculatethe distance betwen player and walls
+ * @ax:
+ * @bx:
+ * @ay:
+ * @by:
+ * Return: The sqrt of
+*/
+float dist(float ax, float ay, float bx, float by)
 {
     return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }

@@ -1,5 +1,5 @@
-#include "INC/map.h"
-#include "INC/player.h"
+#include "../headers/map.h"
+#include "../headers/player.h"
 /**
  * renderMap - This function draw a map using the RGBA color
  * to fill the rectangle
@@ -118,7 +118,7 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
             {
                 hx = rx;
                 hy = ry;
-                distH = dist(player.x, player.y, hx, hy, ra);
+                distH = dist(player.x, player.y, hx, hy);
                 dof = 8;
             }
             else
@@ -165,7 +165,7 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
             {
                 vx = rx;
                 vy = ry;
-                distV = dist(player.x, player.y, vx, vy, ra);
+                distV = dist(player.x, player.y, vx, vy);
                 dof = 8;
             }
             else
