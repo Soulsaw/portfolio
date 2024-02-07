@@ -53,6 +53,13 @@ void renderMap(SDL_Renderer *renderer, int map[TILE_SIZE])
  */
 void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int map[])
 {
+    SDL_Rect sky = {534, 0, 470, 160};
+    SDL_SetRenderDrawColor(renderer, 0, 153, 219, 255);
+	SDL_RenderFillRect(renderer, &sky);
+
+    SDL_Rect floor = {534, 160, 470, 160};
+    SDL_SetRenderDrawColor(renderer, 34, 177, 76, 255);
+	SDL_RenderFillRect(renderer, &floor);
     int r, mx, my, mp, dof, disT;
     float rx, ry, ra, xo, yo;
 
@@ -185,15 +192,11 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
             lineH = 320;
         }                              /* Line heigth */
         float lineO = 160 - lineH / 2; /* Line offsets */
-		SDL_Rect sky = {r * 8 + 530, 2, 10, lineH + lineO};
-        SDL_SetRenderDrawColor(renderer, 0, 153, 219, 255);
-		SDL_RenderFillRect(renderer, &sky);
+
         SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255);
         drawThickLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO, 8);
-		SDL_Rect floor = {r * 8 + 530, lineH + lineO, 10, lineH + lineO};
-        SDL_SetRenderDrawColor(renderer, 34, 177, 76, 255);
-		SDL_RenderFillRect(renderer, &floor);
-       SDL_SetRenderDrawColor(renderer, 33, 171, 74, SDL_ALPHA_OPAQUE);
+
+        SDL_SetRenderDrawColor(renderer, 33, 171, 74, SDL_ALPHA_OPAQUE);
         ra += DR;
         if (ra < 0)
         {
