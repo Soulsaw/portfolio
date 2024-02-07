@@ -22,3 +22,5 @@ oclean:
 	$(RM) $(OBJ_FILES) && clear
 fclean: clean oclean
 re: clean oclean all
+bty:
+	betty $(SRC_DIR)/*.c headers/*

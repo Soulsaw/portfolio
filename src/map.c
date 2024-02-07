@@ -12,63 +12,45 @@
  */
 void renderMap(SDL_Renderer *renderer, int map[TILE_SIZE])
 {
-    for (int y = 0; y < MAP_HEIGHT; ++y)
-    {
-        for (int x = 0; x < MAP_WIDTH; ++x)
-        {
-            if (map[y * MAP_HEIGHT + x] == 1)
-            {
-                SDL_SetRenderDrawColor(renderer, 0XFF, 0XFF, 0XFF,
-                                       SDL_ALPHA_OPAQUE);
-                SDL_Rect wallRect = {x * TILE_SIZE + 1, y * TILE_SIZE + 1,
-                                     TILE_SIZE - 1, TILE_SIZE - 1};
-                SDL_RenderFillRect(renderer, &wallRect);
-            }
-            else
-            {
-                SDL_SetRenderDrawColor(renderer, 0X00, 0X00, 0X00, 255);
-                SDL_Rect floorRect = {x * TILE_SIZE + 1, y * TILE_SIZE + 1,
-                                      TILE_SIZE - 1, TILE_SIZE - 1};
-                SDL_RenderFillRect(renderer, &floorRect);
-            }
-        }
-    }
+	int x, y;
+
+	for (y = 0; y < MAP_HEIGHT; ++y)
+	{
+		for (x = 0; x < MAP_WIDTH; ++x)
+		{
+			if (map[y * MAP_HEIGHT + x] == 1)
+			{
+				SDL_SetRenderDrawColor(renderer, 0XFF, 0XFF, 0XFF,
+									   SDL_ALPHA_OPAQUE);
+				SDL_Rect wallRect = {x * TILE_SIZE + 1, y * TILE_SIZE + 1,
+									 TILE_SIZE - 1, TILE_SIZE - 1};
+
+				SDL_RenderFillRect(renderer, &wallRect);
+			}
+			else
+			{
+				SDL_SetRenderDrawColor(renderer, 0X00, 0X00, 0X00, 255);
+				SDL_Rect floorRect = {x * TILE_SIZE + 1, y * TILE_SIZE + 1,
+									  TILE_SIZE - 1, TILE_SIZE - 1};
+				SDL_RenderFillRect(renderer, &floorRect);
+			}
+		}
+	}
 }
 /**
- * renderMap - This function draw a map using the RGBA color
+ * drawRays2d - This function draw a map using the RGBA color
  * to fill the rectangle
  * @renderer: The renderer to draw the map on
  * \param renderer The renderer to draw the map on
  * @map: The map the Matrix of `X` column and `Y` row
  * \param map The map the Matrix of `X` column and `Y` row
- * @wallTexture: The texture to use
- * \param wallTexture The texture using for drawing
+ * @playerAngle: The texture to use
+ * \param playerAngle The texture using for drawing
+ * @player: The player current position
+ * \param player The player current position
  * Return: Nothing
  * \returns Nothing
  */
-void renderMapTexture(SDL_Renderer *renderer, int map[TILE_SIZE],
-                      SDL_Texture *wallTexture, SDL_Texture *floorTexture)
-{
-    for (int y = 0; y < MAP_HEIGHT; ++y)
-    {
-        for (int x = 0; x < MAP_WIDTH; ++x)
-        {
-            if (map[y * MAP_HEIGHT + x] == 1)
-            {
-                SDL_Rect wallRect = {x * TILE_SIZE, y * TILE_SIZE,
-                                     TILE_SIZE - 1, TILE_SIZE - 1};
-                SDL_RenderCopy(renderer, wallTexture, NULL, &wallRect);
-            }
-            else
-            {
-                SDL_Rect floorRect = {x * TILE_SIZE, y * TILE_SIZE,
-                                      TILE_SIZE - 1, TILE_SIZE - 1};
-                SDL_RenderCopy(renderer, floorTexture, NULL, &floorRect);
-            }
-        }
-    }
-    SDL_DestroyTexture(floorTexture);
-}
 void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int map[])
 {
     int r, mx, my, mp, dof, disT;
@@ -128,11 +110,7 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
                 dof += 1;
             }
         }
-        /*         SDL_SetRenderDrawColor(renderer, 0, 255, 128, 255);
-                SDL_RenderDrawLine(renderer, player.x + 4, player.y + 4, rx, ry);
-                SDL_SetRenderDrawColor(renderer, 0X7F, 0X7F, 0X7F, SDL_ALPHA_OPAQUE); */
-
-        // Check Vertical lines
+        /* Check Vertical lines */
         dof = 0;
         float distV = 1000000, vx = player.x, vy = player.y;
         float nTan = -tan(ra);
