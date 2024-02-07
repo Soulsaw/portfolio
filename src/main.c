@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         SDL_RenderClear(renderer);
         renderMap(renderer, map);
         renderPlayerWithAngle(renderer, player.x, player.y, playerDirection);
-        drawRays3d(renderer, playerAngle, player, map);
+        drawRays2d(renderer, playerAngle, player, map);
         SDL_RenderPresent(renderer);
     }
 /*     SDL_DestroyTexture(wallTexture);

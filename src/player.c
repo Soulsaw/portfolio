@@ -28,3 +28,8 @@ void renderPlayerTexture(SDL_Renderer *renderer, SDL_Texture *playerTexture,
     SDL_Rect playerRect = {playerX, playerY, TILE_SIZE / 3, TILE_SIZE / 3};
     SDL_RenderCopy(renderer, playerTexture, NULL, &playerRect);
 }
+
+float dist(float ax, float ay, float bx, float by, float angle)
+{
+    return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
+}

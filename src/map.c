@@ -1,4 +1,5 @@
 #include "INC/map.h"
+#include "INC/player.h"
 /**
  * renderMap - This function draw a map using the RGBA color
  * to fill the rectangle
@@ -68,16 +69,25 @@ void renderMapTexture(SDL_Renderer *renderer, int map[TILE_SIZE],
     }
     SDL_DestroyTexture(floorTexture);
 }
-void drawRays3d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int map[])
+void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int map[])
 {
     int r, mx, my, mp, dof;
     float rx, ry, ra, xo, yo;
 
-    ra = playerAngle;
+    ra = playerAngle - DR * 30;
+    if (ra < 0)
+    {
+        ra += 2 * PI;
+    }
+    if (ra > 2 * PI)
+    {
+        ra -= 2 * PI;
+    }
     for (r = 0; r < 1; r++)
     {
         // Check Horizontal lines
         dof = 0;
+        float distH = 1000000, hx = player.x, hy = player.y;
         float aTan = -1 / tan(ra);
         if (ra > PI)
         {
@@ -106,6 +116,9 @@ void drawRays3d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
             mp = my * MAP_HEIGHT + mx;
             if (mp > 0 && mp < TILE_SIZE && map[mp] == 1)
             {
+                hx = rx;
+                hy = ry;
+                distH = dist(player.x, player.y, hx, hy, ra);
                 dof = 8;
             }
             else
@@ -115,12 +128,13 @@ void drawRays3d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
                 dof += 1;
             }
         }
-        SDL_SetRenderDrawColor(renderer, 0, 255, 128, 255);
-        SDL_RenderDrawLine(renderer, player.x + 4, player.y + 4, rx, ry);
-        SDL_SetRenderDrawColor(renderer, 0X7F, 0X7F, 0X7F, SDL_ALPHA_OPAQUE);
+        /*         SDL_SetRenderDrawColor(renderer, 0, 255, 128, 255);
+                SDL_RenderDrawLine(renderer, player.x + 4, player.y + 4, rx, ry);
+                SDL_SetRenderDrawColor(renderer, 0X7F, 0X7F, 0X7F, SDL_ALPHA_OPAQUE); */
 
         // Check Vertical lines
         dof = 0;
+        float distV = 1000000, vx = player.x, vy = player.y;
         float nTan = -tan(ra);
         if (ra > P2 && ra < P3)
         {
@@ -149,6 +163,9 @@ void drawRays3d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
             mp = my * MAP_HEIGHT + mx;
             if (mp > 0 && mp < TILE_SIZE && map[mp] == 1)
             {
+                vx = rx;
+                vy = ry;
+                distV = dist(player.x, player.y, vx, vy, ra);
                 dof = 8;
             }
             else
@@ -157,6 +174,16 @@ void drawRays3d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
                 ry += yo;
                 dof += 1;
             }
+        }
+        if (distV < distH)
+        {
+            rx = vx;
+            ry = vy;
+        }
+        if (distH < distV)
+        {
+            rx = hx;
+            ry = hy;
         }
         SDL_SetRenderDrawColor(renderer, 237, 28, 36, 255);
         SDL_RenderDrawLine(renderer, player.x + 4, player.y + 4, rx, ry);
