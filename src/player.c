@@ -20,7 +20,7 @@ void renderPlayerWithAngle(SDL_Renderer *renderer, int playerX, int playerY,
                   playerY + 4,
                   playerX + playerDirection.x * 5,
                   playerY + playerDirection.y * 5, 3);
-    SDL_SetRenderDrawColor(renderer, 0X7F, 0X7F, 0X7F, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(renderer, 113, 113, 113, SDL_ALPHA_OPAQUE);
 }
 void renderPlayerTexture(SDL_Renderer *renderer, SDL_Texture *playerTexture,
                          int playerX, int playerY)
