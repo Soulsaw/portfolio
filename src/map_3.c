@@ -66,8 +66,8 @@ SDL_Point player, int map[])
 */
 void drawFloorAndSky(SDL_Renderer *renderer)
 {
-	SDL_Rect sky = {534, 0, 470, 160};
-	SDL_Rect floor = {534, 160, 470, 160};
+	SDL_Rect sky = {530, 0, 480, 160};
+	SDL_Rect floor = {530, 160, 480, 160};
 
 	/* Draw the sky */
 	SDL_SetRenderDrawColor(renderer, 0, 153, 219, 255);

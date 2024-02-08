@@ -24,8 +24,8 @@ int main(void)
 		};/* Example map and player starting position */
 		SDL_Point player = {playerX, playerY};
 		SDL_Renderer *renderer = initializeSDL();
-		float playerAngle = 0.0;
-		SDL_Point playerDirection = {cos(playerAngle) * 5, sin(playerAngle) * 5};
+		float playerAngle = 0.2;
+		SDL_Point playerDirection = {cos(playerAngle) * 3, sin(playerAngle) * 3};
 
 		if (!renderer)
 			return (1);
@@ -36,7 +36,7 @@ int main(void)
 			SDL_RenderClear(renderer);
 			renderMap(renderer, map);
 			drawRays2d(renderer, playerAngle, player, map);
-			renderPlayerWithAngle(renderer, player.x, player.y, playerDirection);
+			renderPlayer(renderer, player.x, player.y);
 			SDL_RenderPresent(renderer);
 		}
 		SDL_DestroyRenderer(renderer);

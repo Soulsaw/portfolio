@@ -67,15 +67,15 @@ int handleEventWithAngle(SDL_Point *player, float *playerAngle,
 				*playerAngle -= 0.1;
 				if (*playerAngle < 0)
 					*playerAngle += 2 * PI;
-				playerDirection->x = cos(*playerAngle) * 5;
-				playerDirection->y = sin(*playerAngle) * 5;
+				playerDirection->x = cos(*playerAngle) * 3;
+				playerDirection->y = sin(*playerAngle) * 3;
 				break;
 				case SDLK_d:
 				*playerAngle += 0.1;
 				if (*playerAngle > 2 * PI)
-				*playerAngle -= 2 * PI;
-				playerDirection->x = cos(*playerAngle) * 5;
-				playerDirection->y = sin(*playerAngle) * 5;
+					*playerAngle -= 2 * PI;
+				playerDirection->x = cos(*playerAngle) * 3;
+				playerDirection->y = sin(*playerAngle) * 3;
 				break;
 				case SDLK_w:
 				player->x += playerDirection->x;
