@@ -38,6 +38,59 @@ void renderMap(SDL_Renderer *renderer, int map[TILE_SIZE])
 	}
 }
 /**
+ * moveAngle - This function permit to move the rayon angle
+ * @pa: The player angle
+ * \param pa The player angle
+ * Return: The new rayon angle of the player view
+ * \returns The new player view rayon
+*/
+float moveAngle(float pa)
+{
+    float ra = pa - DR * 30;
+    if (ra < 0)
+    {
+        ra += 2 * PI;
+    }
+    if (ra > 2 * PI)
+    {
+        ra -= 2 * PI;
+    }
+    return (ra);
+}
+void playerLookingUp(SDL_Point player, float *rx, float *ry,
+float *xo, float *yo, float ra, float aTan)
+{
+        if (ra > PI)
+        {
+            *ry = (((int)player.y >> 6) << 6) - 0.0001;
+            *rx = (player.y - *ry) * aTan + player.x;
+            *yo = -64;
+            *xo = -(*yo) * aTan;
+        }/* Looking up */
+}
+
+void playerLookingDown(SDL_Point player, float *rx, float *ry,
+float *xo, float *yo, float ra, float aTan)
+{
+        if (ra < PI)
+        {
+            *ry = (((int)player.y >> 6) << 6) + 64;
+            *rx = (player.y - *ry) * aTan + player.x;
+            *yo = 64;
+            *xo = -(*yo) * aTan;
+        }/* Looking down */
+}
+void lookingStraigth(SDL_Point player, float ra, float *rx,
+float *ry, int *dof)
+{
+        if (ra == 0 || ra == PI)
+        {
+            *rx = player.x;
+            *ry = player.y;
+            *dof = 8;
+        } // looking straigth left or right
+}
+/**
  * drawRays2d - This function draw a map using the RGBA color
  * to fill the rectangle
  * @renderer: The renderer to draw the map on
@@ -57,41 +110,16 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
     int r, mx, my, mp, dof, disT;
     float rx, ry, ra, xo, yo;
 
-    ra = playerAngle - DR * 30;
-    if (ra < 0)
-    {
-        ra += 2 * PI;
-    }
-    if (ra > 2 * PI)
-    {
-        ra -= 2 * PI;
-    }
+    ra = moveAngle(playerAngle);
     for (r = 0; r < 60; r++)
     {
         // Check Horizontal lines
         dof = 0;
         float distH = 1000000, hx = player.x, hy = player.y;
         float aTan = -1 / tan(ra);
-        if (ra > PI)
-        {
-            ry = (((int)player.y >> 6) << 6) - 0.0001;
-            rx = (player.y - ry) * aTan + player.x;
-            yo = -64;
-            xo = -yo * aTan;
-        } // Looking up
-        if (ra < PI)
-        {
-            ry = (((int)player.y >> 6) << 6) + 64;
-            rx = (player.y - ry) * aTan + player.x;
-            yo = 64;
-            xo = -yo * aTan;
-        } // Looking down
-        if (ra == 0 || ra == PI)
-        {
-            rx = player.x;
-            ry = player.y;
-            dof = 8;
-        } // looking straigth left or right
+        playerLookingUp(player, &rx, &ry, &xo, &yo, ra, aTan);
+        playerLookingDown(player, &rx, &ry, &xo, &yo, ra, aTan);
+        lookingStraigth(player, ra, &rx, &ry, &dof);
         while (dof < 8)
         {
             mx = (int)(rx) >> 6;
