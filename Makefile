@@ -4,7 +4,7 @@ LDFLAGS = $(shell sdl2-config --libs)
 
 # Directories
 SRC_DIR = src
-OBJ = obj
+OBJ = src
 EXCEC = prog
 RM = rm -f
 # Source files
