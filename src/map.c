@@ -78,41 +78,6 @@ float *xo, float *yo, float ra, float aTan)
 		*xo = -(*yo) * aTan;
 	} /* Looking up */
 }
-void cutRayLength(int *disT, float disV, float disH, float *rx, float *ry,
-float hx, float hy, float vx, float vy)
-{
-    if (disV < disH)
-    {
-        *rx = vx;
-        *ry = vy;
-        *disT = disV;
-    }
-    if (disH < disV)
-    {
-        *rx = hx;
-        *ry = hy;
-        *disT = disH;
-    }
-}
-void draw3dWalls(SDL_Renderer *renderer, float pa, int *disT,
-int r, float ra)
-{
-        /* Draw the 3D walls */
-        float ca = pa - ra;
-        ca = moveAngle(ca);
-        *disT = (*disT) * cos(ca); /* fix fisheye */
-        float lineH = (TILE_SIZE * 320) / (*disT);
-        if (lineH > 320)
-        {
-            lineH = 320;
-        }                              /* Line heigth */
-        float lineO = 160 - lineH / 2; /* Line offsets */
-
-        SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255);
-        drawThickLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO, 8);
-
-        SDL_SetRenderDrawColor(renderer, 33, 171, 74, SDL_ALPHA_OPAQUE);
-}
 /**
  * playerLookingUp - This function permit to get the distance
  * between player and wall if he looking Down
