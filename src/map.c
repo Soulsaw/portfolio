@@ -53,13 +53,7 @@ void renderMap(SDL_Renderer *renderer, int map[TILE_SIZE])
  */
 void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int map[])
 {
-    SDL_Rect sky = {534, 0, 470, 160};
-    SDL_SetRenderDrawColor(renderer, 0, 153, 219, 255);
-	SDL_RenderFillRect(renderer, &sky);
-
-    SDL_Rect floor = {534, 160, 470, 160};
-    SDL_SetRenderDrawColor(renderer, 34, 177, 76, 255);
-	SDL_RenderFillRect(renderer, &floor);
+    drawFloorAndSky(renderer);
     int r, mx, my, mp, dof, disT;
     float rx, ry, ra, xo, yo;
 
@@ -207,4 +201,23 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
             ra -= 2 * PI;
         }
     }
+}
+
+/**
+ * drawFloorAndSky - This function permit to set the color of
+ * the sky and the floor
+ * @renderer: The renderer to print on
+ * \param renderer the renderer to draw on
+ * Return: Nothing
+ * \returns Nothing
+*/
+void drawFloorAndSky(SDL_Renderer *renderer)
+{
+    SDL_Rect sky = {534, 0, 470, 160};
+    SDL_SetRenderDrawColor(renderer, 0, 153, 219, 255);
+	SDL_RenderFillRect(renderer, &sky);
+
+    SDL_Rect floor = {534, 160, 470, 160};
+    SDL_SetRenderDrawColor(renderer, 34, 177, 76, 255);
+	SDL_RenderFillRect(renderer, &floor);
 }
