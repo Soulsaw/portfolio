@@ -44,9 +44,8 @@ void renderMap(SDL_Renderer *renderer, int map[TILE_SIZE])
  * Return: The new rayon angle of the player view
  * \returns The new player view rayon
 */
-float moveAngle(float pa)
+float moveAngle(float ra)
 {
-    float ra = pa - DR * 30;
     if (ra < 0)
     {
         ra += 2 * PI;
@@ -135,6 +134,41 @@ float *xo, float *yo, int *dof, float *dis, float *x, float *y)
         }
     }
 }
+void cutRayLength(int *disT, float disV, float disH, float *rx, float *ry,
+float hx, float hy, float vx, float vy)
+{
+    if (disV < disH)
+    {
+        *rx = vx;
+        *ry = vy;
+        *disT = disV;
+    }
+    if (disH < disV)
+    {
+        *rx = hx;
+        *ry = hy;
+        *disT = disH;
+    }
+}
+void draw3dWalls(SDL_Renderer *renderer, float pa, int *disT,
+int r, float ra)
+{
+        /* Draw the 3D walls */
+        float ca = pa - ra;
+        ca = moveAngle(ca);
+        *disT = (*disT) * cos(ca); /* fix fisheye */
+        float lineH = (TILE_SIZE * 320) / (*disT);
+        if (lineH > 320)
+        {
+            lineH = 320;
+        }                              /* Line heigth */
+        float lineO = 160 - lineH / 2; /* Line offsets */
+
+        SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255);
+        drawThickLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO, 8);
+
+        SDL_SetRenderDrawColor(renderer, 33, 171, 74, SDL_ALPHA_OPAQUE);
+}
 /**
  * drawRays2d - This function draw a map using the RGBA color
  * to fill the rectangle
@@ -155,7 +189,8 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
     int r, dof, disT;
     float rx, ry, ra, xo, yo;
 
-    ra = moveAngle(playerAngle);
+    ra = playerAngle - DR * 30;
+    ra = moveAngle(ra);
     for (r = 0; r < 60; r++)
     {
         /* Check Horizontal lines */
@@ -174,52 +209,14 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
         playerLookingRigth(player, &rx, &ry, &xo, &yo, ra, nTan);
         lookingStraigth(player, ra, &rx, &ry, &dof);
         coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof, &disV, &vx, &vy);
-        if (disV < disH)
-        {
-            rx = vx;
-            ry = vy;
-            disT = disV;
-        }
-        if (disH < disV)
-        {
-            rx = hx;
-            ry = hy;
-            disT = disH;
-        }
+        cutRayLength(&disT, disV, disH, &rx, &ry, hx, hy, vx, vy);
 
         SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255);
         SDL_RenderDrawLine(renderer, player.x + 4, player.y + 4, rx, ry);
-        /* Draw the 3D walls */
-        float ca = playerAngle - ra;
-        if (ca < 0)
-        {
-            ca += 2 * PI;
-        }
-        if (ca > 2 * PI)
-        {
-            ca -= 2 * PI;
-        }
-        disT = disT * cos(ca); /* fix fisheye */
-        float lineH = (TILE_SIZE * 320) / disT;
-        if (lineH > 320)
-        {
-            lineH = 320;
-        }                              /* Line heigth */
-        float lineO = 160 - lineH / 2; /* Line offsets */
 
-        SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255);
-        drawThickLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO, 8);
-
-        SDL_SetRenderDrawColor(renderer, 33, 171, 74, SDL_ALPHA_OPAQUE);
+        draw3dWalls(renderer, playerAngle, &disT, r, ra);
         ra += DR;
-        if (ra < 0)
-        {
-            ra += 2 * PI;
-        }
-        if (ra > 2 * PI)
-        {
-            ra -= 2 * PI;
-        }
+        ra = moveAngle(ra);
     }
 }
 
