@@ -68,7 +68,6 @@ float *xo, float *yo, float ra, float aTan)
             *xo = -(*yo) * aTan;
         }/* Looking up */
 }
-
 void playerLookingDown(SDL_Point player, float *rx, float *ry,
 float *xo, float *yo, float ra, float aTan)
 {
@@ -89,6 +88,17 @@ float *ry, int *dof)
             *ry = player.y;
             *dof = 8;
         } // looking straigth left or right
+}
+void playerLookingLeft(SDL_Point player, float *rx, float *ry,
+float *xo, float *yo, float ra, float nTan)
+{
+        if (ra > P2 && ra < P3)
+        {
+            *rx = (((int)player.x >> 6) << 6) - 0.0001;
+            *ry = (player.x - (*rx)) * nTan + player.y;
+            *xo = -64;
+            *yo = -(*xo) * nTan;
+        } // Looking left
 }
 /**
  * drawRays2d - This function draw a map using the RGBA color
@@ -143,13 +153,14 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
         dof = 0;
         float distV = 1000000, vx = player.x, vy = player.y;
         float nTan = -tan(ra);
-        if (ra > P2 && ra < P3)
+        playerLookingLeft(player, &rx, &ry, &xo, &yo, ra, nTan);
+/*         if (ra > P2 && ra < P3)
         {
             rx = (((int)player.x >> 6) << 6) - 0.0001;
             ry = (player.x - rx) * nTan + player.y;
             xo = -64;
             yo = -xo * nTan;
-        } // Looking left
+        } // Looking left */
         if (ra < P2 || ra > P3)
         {
             rx = (((int)player.x >> 6) << 6) + 64;
@@ -157,12 +168,7 @@ void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int
             xo = 64;
             yo = -xo * nTan;
         } // Looking rigth
-        if (ra == 0 || ra == PI)
-        {
-            rx = player.x;
-            ry = player.y;
-            dof = 8;
-        } // looking straigth up or down
+        lookingStraigth(player, ra, &rx, &ry, &dof);
         while (dof < 8)
         {
             mx = (int)(rx) >> 6;

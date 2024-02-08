@@ -14,4 +14,6 @@ float *xo, float *yo, float ra, float aTan);
 void lookingStraigth(SDL_Point player, float ra, float *rx,
 float *ry, int *dof);
 /* Vertical Walls checks */
+void playerLookingLeft(SDL_Point player, float *rx, float *ry,
+float *xo, float *yo, float ra, float nTan);
 #endif
