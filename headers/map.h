@@ -16,4 +16,9 @@ float *ry, int *dof);
 /* Vertical Walls checks */
 void playerLookingLeft(SDL_Point player, float *rx, float *ry,
 float *xo, float *yo, float ra, float nTan);
+void playerLookingRigth(SDL_Point player, float *rx, float *ry,
+float *xo, float *yo, float ra, float nTan);
+
+void coolisionWithWall(SDL_Point player, int map[], float *rx, float *ry,
+float *xo, float *yo, int *dof, float *dis, float *x, float *y);
 #endif

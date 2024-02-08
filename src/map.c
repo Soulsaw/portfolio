@@ -100,6 +100,41 @@ float *xo, float *yo, float ra, float nTan)
             *yo = -(*xo) * nTan;
         } // Looking left
 }
+void playerLookingRigth(SDL_Point player, float *rx, float *ry,
+float *xo, float *yo, float ra, float nTan)
+{
+        if (ra < P2 || ra > P3)
+        {
+            *rx = (((int)player.x >> 6) << 6) + 64;
+            *ry = (player.x - (*rx)) * nTan + player.y;
+            *xo = 64;
+            *yo = -(*xo) * nTan;
+        } // Looking rigth
+}
+void coolisionWithWall(SDL_Point player, int map[], float *rx, float *ry,
+float *xo, float *yo, int *dof, float *dis, float *x, float *y)
+{
+    int mx, my, mp;
+    while (*dof < 8)
+    {
+        mx = (int)(*rx) >> 6;
+        my = (int)(*ry) >> 6;
+        mp = my * MAP_HEIGHT + mx;
+        if (mp > 0 && mp < TILE_SIZE && map[mp] == 1)
+        {
+            *x = *rx;
+            *y = *ry;
+            *dis = dist(player.x, player.y, *x, *y);
+            *dof = 8;
+        }
+        else
+        {
+            *rx += *xo;
+            *ry += *yo;
+            *dof += 1;
+        }
+    }
+}
 /**
  * drawRays2d - This function draw a map using the RGBA color
  * to fill the rectangle
@@ -117,88 +152,39 @@ float *xo, float *yo, float ra, float nTan)
 void drawRays2d(SDL_Renderer *renderer, float playerAngle, SDL_Point player, int map[])
 {
     drawFloorAndSky(renderer);
-    int r, mx, my, mp, dof, disT;
+    int r, dof, disT;
     float rx, ry, ra, xo, yo;
 
     ra = moveAngle(playerAngle);
     for (r = 0; r < 60; r++)
     {
-        // Check Horizontal lines
+        /* Check Horizontal lines */
         dof = 0;
-        float distH = 1000000, hx = player.x, hy = player.y;
+        float disH = 1000000, hx = player.x, hy = player.y;
         float aTan = -1 / tan(ra);
         playerLookingUp(player, &rx, &ry, &xo, &yo, ra, aTan);
         playerLookingDown(player, &rx, &ry, &xo, &yo, ra, aTan);
         lookingStraigth(player, ra, &rx, &ry, &dof);
-        while (dof < 8)
-        {
-            mx = (int)(rx) >> 6;
-            my = (int)(ry) >> 6;
-            mp = my * MAP_HEIGHT + mx;
-            if (mp > 0 && mp < TILE_SIZE && map[mp] == 1)
-            {
-                hx = rx;
-                hy = ry;
-                distH = dist(player.x, player.y, hx, hy);
-                dof = 8;
-            }
-            else
-            {
-                rx += xo;
-                ry += yo;
-                dof += 1;
-            }
-        }
+        coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof, &disH, &hx, &hy);
         /* Check Vertical lines */
         dof = 0;
-        float distV = 1000000, vx = player.x, vy = player.y;
+        float disV = 1000000, vx = player.x, vy = player.y;
         float nTan = -tan(ra);
         playerLookingLeft(player, &rx, &ry, &xo, &yo, ra, nTan);
-/*         if (ra > P2 && ra < P3)
-        {
-            rx = (((int)player.x >> 6) << 6) - 0.0001;
-            ry = (player.x - rx) * nTan + player.y;
-            xo = -64;
-            yo = -xo * nTan;
-        } // Looking left */
-        if (ra < P2 || ra > P3)
-        {
-            rx = (((int)player.x >> 6) << 6) + 64;
-            ry = (player.x - rx) * nTan + player.y;
-            xo = 64;
-            yo = -xo * nTan;
-        } // Looking rigth
+        playerLookingRigth(player, &rx, &ry, &xo, &yo, ra, nTan);
         lookingStraigth(player, ra, &rx, &ry, &dof);
-        while (dof < 8)
-        {
-            mx = (int)(rx) >> 6;
-            my = (int)(ry) >> 6;
-            mp = my * MAP_HEIGHT + mx;
-            if (mp > 0 && mp < TILE_SIZE && map[mp] == 1)
-            {
-                vx = rx;
-                vy = ry;
-                distV = dist(player.x, player.y, vx, vy);
-                dof = 8;
-            }
-            else
-            {
-                rx += xo;
-                ry += yo;
-                dof += 1;
-            }
-        }
-        if (distV < distH)
+        coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof, &disV, &vx, &vy);
+        if (disV < disH)
         {
             rx = vx;
             ry = vy;
-            disT = distV;
+            disT = disV;
         }
-        if (distH < distV)
+        if (disH < disV)
         {
             rx = hx;
             ry = hy;
-            disT = distH;
+            disT = disH;
         }
 
         SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255);
