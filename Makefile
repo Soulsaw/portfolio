@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pedantic $(shell sdl2-config --cflags)
+CFLAGS =$(shell sdl2-config --cflags)
 LDFLAGS = $(shell sdl2-config --libs)
 
 # Directories

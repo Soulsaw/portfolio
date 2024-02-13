@@ -66,17 +66,17 @@ float *xo, float *yo, int *dof, float *dis, float *x, float *y)
 {
 	int mx, my, mp;
 
-	while (*dof < 8)
+	while (*dof < MAP_HEIGHT)
 	{
-		mx = (int)(*rx) >> 6;
-		my = (int)(*ry) >> 6;
+		mx = (int)(*rx / TILE_SIZE);
+		my = (int)(*ry  / TILE_SIZE);
 		mp = my * MAP_HEIGHT + mx;
 		if (mp > 0 && mp < TILE_SIZE && map[mp] == 1)
 		{
 			*x = *rx;
 			*y = *ry;
 			*dis = dist(player.x, player.y, *x, *y);
-			*dof = 8;
+			*dof = MAP_HEIGHT;
 		}
 		else
 		{
