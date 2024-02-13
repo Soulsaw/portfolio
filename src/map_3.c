@@ -34,9 +34,7 @@ SDL_Point player, int map[])
 		playerLookingDown(player, &rx, &ry, &xo, &yo, ra, aTan);
 		coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof,
 		&disH, &hx, &hy);
-		/* lookingStraigth(player, ra, &rx, &ry, &dof); */
-/* 		coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof,
-		&disH, &hx, &hy); */
+
 		/* Check Vertical lines */
 		dof = 0;
 		float disV = 1000000, vx = player.x, vy = player.y;
@@ -47,13 +45,10 @@ SDL_Point player, int map[])
 		coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof,
 		&disV, &vx, &vy);
 		cutRayLength(&disT, disV, disH, &rx, &ry, hx, hy, vx, vy);
-		/* lookingStraigth(player, ra, &rx, &ry, &dof);
-		coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof,
-		&disV, &vx, &vy);
-		cutRayLength(&disT, disV, disH, &rx, &ry, hx, hy, vx, vy); */
 
 		SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255);
-		SDL_RenderDrawLine(renderer, player.x + 4, player.y + 4, rx, ry);
+		SDL_RenderDrawLine(renderer, player.x + (sqrt(TILE_SIZE) / 2),
+		player.y + (sqrt(TILE_SIZE) / 2), rx, ry);
 
 		/* draw3dWalls(renderer, playerAngle, &disT, r, ra); */
 		ra += DR;
