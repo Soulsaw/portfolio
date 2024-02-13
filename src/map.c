@@ -74,7 +74,7 @@ float *xo, float *yo, float ra, float aTan)
 	{
 		*ry = (((int)player.y >> 6) << 6) - 0.0001;
 		*rx = (player.y - *ry) * aTan + player.x;
-		*yo = -64;
+		*yo = -TILE_SIZE;
 		*xo = -(*yo) * aTan;
 	} /* Looking up */
 }
@@ -95,9 +95,9 @@ float *xo, float *yo, float ra, float aTan)
 {
 	if (ra < PI)
 	{
-		*ry = (((int)player.y >> 6) << 6) + 64;
+		*ry = (((int)player.y >> 6) << 6) + TILE_SIZE;
 		*rx = (player.y - *ry) * aTan + player.x;
-		*yo = 64;
+		*yo = TILE_SIZE;
 		*xo = -(*yo) * aTan;
 	} /* Looking down */
 }
