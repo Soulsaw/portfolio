@@ -17,10 +17,10 @@ float *xo, float *yo, float ra, float nTan)
 {
 	if (ra > P2 && ra < P3)
 	{
-		*rx = (((int)player.x >> 6) << 6) - 0.0001;
-		*ry = (player.x - (*rx)) * nTan + player.y;
+		*rx = (int)(player.x / TILE_SIZE) * TILE_SIZE - 1;
+		*ry = (player.x - *rx) * nTan + player.y;
 		*xo = -TILE_SIZE;
-		*yo = -(*xo) * nTan;
+		*yo = (*xo) * nTan;
 	}
 }
 /**
@@ -40,10 +40,10 @@ float *xo, float *yo, float ra, float nTan)
 {
 	if (ra < P2 || ra > P3)
 	{
-		*rx = (((int)player.x >> 6) << 6) + TILE_SIZE;
-		*ry = (player.x - (*rx)) * nTan + player.y;
+		*rx = (int)(player.x / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
+		*ry = (player.x - *rx) * nTan + player.y;
 		*xo = TILE_SIZE;
-		*yo = -(*xo) * nTan;
+		*yo = *xo * nTan;
 	}
 }
 /**
