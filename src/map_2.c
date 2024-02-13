@@ -20,7 +20,7 @@ float *xo, float *yo, float ra, float nTan)
 		*rx = (int)(player.x / TILE_SIZE) * TILE_SIZE - 1;
 		*ry = (player.x - *rx) * nTan + player.y;
 		*xo = -TILE_SIZE;
-		*yo = (*xo) * nTan;
+		*yo = -(*xo) * nTan;
 	}
 }
 /**
@@ -43,7 +43,7 @@ float *xo, float *yo, float ra, float nTan)
 		*rx = (int)(player.x / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
 		*ry = (player.x - *rx) * nTan + player.y;
 		*xo = TILE_SIZE;
-		*yo = *xo * nTan;
+		*yo = -(*xo) * nTan;
 	}
 }
 /**

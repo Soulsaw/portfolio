@@ -23,25 +23,30 @@ SDL_Point player, int map[])
 	drawFloorAndSky(renderer);
 	ra = playerAngle - DR * 30;
 	ra = moveAngle(ra);
-	for (r = 0; r < 1; r++)
+	for (r = 0; r < 60; r++)
 	{
 		/* Check Horizontal lines */
 		dof = 0;
 		float disH = 1000000, hx = player.x, hy = player.y;
-		float aTan = 1 / tan(ra);
+		float aTan = -1 / tan(ra);
 
 		playerLookingUp(player, &rx, &ry, &xo, &yo, ra, aTan);
 		playerLookingDown(player, &rx, &ry, &xo, &yo, ra, aTan);
-		/* lookingStraigth(player, ra, &rx, &ry, &dof); */
 		coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof,
 		&disH, &hx, &hy);
+		/* lookingStraigth(player, ra, &rx, &ry, &dof); */
+/* 		coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof,
+		&disH, &hx, &hy); */
 		/* Check Vertical lines */
 		dof = 0;
 		float disV = 1000000, vx = player.x, vy = player.y;
-		float nTan = tan(ra);
+		float nTan = -tan(ra);
 
 		playerLookingLeft(player, &rx, &ry, &xo, &yo, ra, nTan);
 		playerLookingRigth(player, &rx, &ry, &xo, &yo, ra, nTan);
+		coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof,
+		&disV, &vx, &vy);
+		cutRayLength(&disT, disV, disH, &rx, &ry, hx, hy, vx, vy);
 		/* lookingStraigth(player, ra, &rx, &ry, &dof);
 		coolisionWithWall(player, map, &rx, &ry, &xo, &yo, &dof,
 		&disV, &vx, &vy);

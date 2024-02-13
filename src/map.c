@@ -75,7 +75,7 @@ float *xo, float *yo, float ra, float aTan)
 		*ry = (int)(player.y / TILE_SIZE) * TILE_SIZE - 1;
 		*rx = (player.y - *ry) * aTan + player.x;
 		*yo = -TILE_SIZE;
-		*xo = (*yo) * aTan;
+		*xo = -(*yo) * aTan;
 	} /* Looking up */
 }
 /**
@@ -98,7 +98,7 @@ float *xo, float *yo, float ra, float aTan)
 		*ry = (int)(player.y / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
 		*rx = (player.y - *ry) * aTan + player.x;
 		*yo = TILE_SIZE;
-		*xo = (*yo) * aTan;
+		*xo = -(*yo) * aTan;
 	} /* Looking down */
 }
 /**
