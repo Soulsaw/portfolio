@@ -51,8 +51,9 @@ int handleEvent(SDL_Point *player)
  * w,s,a or d is KEY_DOWN
 */
 int handleEventWithAngle(SDL_Point *player, float *playerAngle,
-						 SDL_Point *playerDirection)
+						 SDL_Point *playerDirection, int map[])
 {
+	int mx, mp, my;
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event) != 0)
@@ -78,12 +79,24 @@ int handleEventWithAngle(SDL_Point *player, float *playerAngle,
 				playerDirection->y = sin(*playerAngle) * 5;
 				break;
 				case SDLK_w:
-				player->x += playerDirection->x;
-				player->y += playerDirection->y;
+				mx = (int)((player->x + playerDirection->x)/ TILE_SIZE);
+				my = (int)((player->y + playerDirection->y) / TILE_SIZE);
+				mp = my * MAP_HEIGHT + mx;
+				if (mp > 0 && mp < TILE_SIZE && map[mp] == 0)
+				{
+					player->x += playerDirection->x;
+					player->y += playerDirection->y;
+				}
 				break;
 				case SDLK_s:
-				player->x -= playerDirection->x;
-				player->y -= playerDirection->y;
+				mx = (int)((player->x + playerDirection->x)/ TILE_SIZE);
+				my = (int)((player->y + playerDirection->y) / TILE_SIZE);
+				mp = my * MAP_HEIGHT + mx;
+				if (mp > 0 && mp < TILE_SIZE && map[mp] == 0)
+				{
+					player->x -= playerDirection->x;
+					player->y -= playerDirection->y;
+				}
 				break;
 			}
 		}

@@ -3,5 +3,5 @@
 #include "../headers/header.h"
 int handleEvent(SDL_Point *player);
 int handleEventWithAngle(SDL_Point *player, float *playerAngle,
-						 SDL_Point *playerDirection);
+						 SDL_Point *playerDirection, int map[]);
 #endif

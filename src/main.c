@@ -14,12 +14,12 @@ int main(void)
 	int quit = 0;
 	int map[] = {
 		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 0, 0, 0, 1, 0, 0, 1,
 		1, 0, 0, 0, 0, 0, 0, 1,
-		1, 0, 0, 0, 0, 0, 0, 1,
-		1, 0, 0, 0, 0, 0, 1, 1,
+		1, 1, 1, 0, 0, 0, 1, 1,
 		1, 0, 0, 0, 0, 0, 0, 1,
 		1, 0, 0, 0, 0, 1, 1, 1,
-		1, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 1, 0, 0, 0, 1,
 		1, 1, 1, 1, 1, 1, 1, 1
 		};/* Example map and player starting position */
 		SDL_Point player = {playerX, playerY};
@@ -31,10 +31,12 @@ int main(void)
 			return (1);
 		while (!quit)
 		{
-			if (handleEventWithAngle(&player, &playerAngle, &playerDirection) == 1)
+			if (handleEventWithAngle(&player, &playerAngle, &playerDirection, map) == 1)
 				quit = 1;
 			SDL_RenderClear(renderer);
 			drawRays2d(renderer, playerAngle, player, map);
+			renderMap(renderer, map);
+			renderPlayer(renderer, player.x, player.y);
 /* 			renderMap(renderer, map);
 			renderPlayer(renderer, player.x, player.y); */
 			SDL_RenderPresent(renderer);

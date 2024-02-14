@@ -46,6 +46,9 @@ SDL_Point player, int map[])
 		&disV, &vx, &vy);
 		cutRayLength(&disT, disV, disH, &rx, &ry, hx, hy, vx, vy);
 
+		SDL_SetRenderDrawColor(renderer, 123, 34, 18, 255);
+		SDL_RenderDrawLine(renderer, player.x, player.y, rx, ry);
+
 		draw3dWalls(renderer, playerAngle, &disT, r, ra);		
 		ra += DR;
 		ra = moveAngle(ra);
