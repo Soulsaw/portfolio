@@ -46,11 +46,12 @@ SDL_Point player, int map[])
 		&disV, &vx, &vy);
 		cutRayLength(&disT, disV, disH, &rx, &ry, hx, hy, vx, vy);
 
-		SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255);
+/* 		SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255);
 		SDL_RenderDrawLine(renderer, player.x + (sqrt(TILE_SIZE) / 2),
-		player.y + (sqrt(TILE_SIZE) / 2), rx, ry);
+		player.y + (sqrt(TILE_SIZE) / 2), rx, ry); */
 
-		/* draw3dWalls(renderer, playerAngle, &disT, r, ra); */
+		draw3dWalls(renderer, playerAngle, &disT, r, ra);
+		
 		ra += DR;
 		ra = moveAngle(ra);
 	}
@@ -66,8 +67,8 @@ SDL_Point player, int map[])
 */
 void drawFloorAndSky(SDL_Renderer *renderer)
 {
-	SDL_Rect sky = {530, 0, 480, 160};
-	SDL_Rect floor = {530, 160, 480, 160};
+	SDL_Rect sky = {0, 0, 1024, 256};
+	SDL_Rect floor = {0, 256, 1024, 256};
 
 	/* Draw the sky */
 	SDL_SetRenderDrawColor(renderer, 0, 153, 219, 255);

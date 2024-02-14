@@ -34,9 +34,9 @@ int main(void)
 			if (handleEventWithAngle(&player, &playerAngle, &playerDirection) == 1)
 				quit = 1;
 			SDL_RenderClear(renderer);
-			renderMap(renderer, map);
+			/* renderMap(renderer, map); */
 			drawRays2d(renderer, playerAngle, player, map);
-			renderPlayer(renderer, player.x, player.y);
+			/* renderPlayer(renderer, player.x, player.y); */
 			SDL_RenderPresent(renderer);
 		}
 		SDL_DestroyRenderer(renderer);

@@ -132,11 +132,11 @@ int r, float ra)
 
 	ca = moveAngle(ca);
 	*disT = (*disT) * cos(ca);/* fix fisheye */
-	float lineH = (TILE_SIZE * 320) / (*disT);
+	float heigth = (float)SCREEN_WIDTH;
+	float plan = ceil(heigth / (2 * 0.57735));/* tan(30) = 0,57735 */
+	float lineH = ceil(((float)TILE_SIZE / *disT) * plan);
 
-	if (lineH > 320)
-		lineH = 320;/* Line heigth */
-	float lineO = 160 - lineH / 2;/* Line offsets */
+	float lineO = 256 - lineH / 2;/* Line offsets */
 
 	if (SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255) != 0)
 	{
@@ -144,7 +144,7 @@ int r, float ra)
 		SDL_GetError());
 		exit(1);
 	}
-	drawThickLine(renderer, r * 8 + 530, lineO, r * 8 + 530, lineH + lineO, 8);
+	drawThickLine(renderer, r * 18, lineO, r * 18, lineH + lineO, 18);
 	if (SDL_SetRenderDrawColor(renderer, 33, 171, 74, 255) != 0)
 	{
 		fprintf(stderr, "Error: SDL_SetRenderDrawColor > %s\n", SDL_GetError());
