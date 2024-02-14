@@ -71,7 +71,7 @@ float *xo, float *yo, int *dof, float *dis, float *x, float *y)
 		mx = (int)(*rx / TILE_SIZE);
 		my = (int)(*ry  / TILE_SIZE);
 		mp = my * MAP_HEIGHT + mx;
-		if (mp > 0 && mp < TILE_SIZE && map[mp] == 1)
+		if (mp > 0 && mp < MAP_SIZE && map[mp] == 1)
 		{
 			*x = *rx;
 			*y = *ry;

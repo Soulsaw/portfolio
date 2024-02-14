@@ -26,13 +26,6 @@ void renderMap(SDL_Renderer *renderer, int map[TILE_SIZE])
 				TILE_SIZE - 1, TILE_SIZE - 1};
 				SDL_RenderFillRect(renderer, &wallRect);
 			}
-			else
-			{
-				SDL_SetRenderDrawColor(renderer, 25, 35, 45, 255);
-				SDL_Rect floorRect = {x * TILE_SIZE + 1, y * TILE_SIZE + 1,
-				TILE_SIZE - 1, TILE_SIZE - 1};
-				SDL_RenderFillRect(renderer, &floorRect);
-			}
 		}
 	}
 }

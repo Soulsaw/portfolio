@@ -37,8 +37,6 @@ int main(void)
 			drawRays2d(renderer, playerAngle, player, map);
 			renderMap(renderer, map);
 			renderPlayer(renderer, player.x, player.y);
-/* 			renderMap(renderer, map);
-			renderPlayer(renderer, player.x, player.y); */
 			SDL_RenderPresent(renderer);
 		}
 		SDL_DestroyRenderer(renderer);

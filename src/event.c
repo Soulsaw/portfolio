@@ -79,20 +79,20 @@ int handleEventWithAngle(SDL_Point *player, float *playerAngle,
 				playerDirection->y = sin(*playerAngle) * 5;
 				break;
 				case SDLK_w:
-				mx = (int)((player->x + playerDirection->x)/ TILE_SIZE);
+				mx = (int)((player->x + playerDirection->x) / TILE_SIZE);
 				my = (int)((player->y + playerDirection->y) / TILE_SIZE);
 				mp = my * MAP_HEIGHT + mx;
-				if (mp > 0 && mp < TILE_SIZE && map[mp] == 0)
+				if (mp > 0 && mp < MAP_SIZE && map[mp] == 0)
 				{
 					player->x += playerDirection->x;
 					player->y += playerDirection->y;
 				}
 				break;
 				case SDLK_s:
-				mx = (int)((player->x + playerDirection->x)/ TILE_SIZE);
+				mx = (int)((player->x + playerDirection->x) / TILE_SIZE);
 				my = (int)((player->y + playerDirection->y) / TILE_SIZE);
 				mp = my * MAP_HEIGHT + mx;
-				if (mp > 0 && mp < TILE_SIZE && map[mp] == 0)
+				if (mp > 0 && mp < MAP_SIZE && map[mp] == 0)
 				{
 					player->x -= playerDirection->x;
 					player->y -= playerDirection->y;
