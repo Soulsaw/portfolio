@@ -10,7 +10,7 @@
  * Return: Nothing
  * \returns Nothing
  */
-void renderMap(SDL_Renderer *renderer, int map[TILE_SIZE])
+void renderMap(SDL_Renderer *renderer, int map[])
 {
 	int x, y;
 
@@ -18,7 +18,7 @@ void renderMap(SDL_Renderer *renderer, int map[TILE_SIZE])
 	{
 		for (x = 0; x < MAP_WIDTH; ++x)
 		{
-			if (map[y * MAP_HEIGHT + x] == 1)
+			if (map[y * MAP_WIDTH + x] == 1)
 			{
 				SDL_SetRenderDrawColor(renderer, 0XFF, 0XFF, 0XFF,
 				255);
