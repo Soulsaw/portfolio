@@ -3,3 +3,4 @@
 .vscode
 include/SDL2
 lib
+prog
