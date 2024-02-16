@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 512
+#define SCREEN_WIDTH 1126
+#define SCREEN_HEIGHT 700
 #define TILE_SIZE 16
 #define MAP_SIZE 96
 #define MAP_WIDTH 12
