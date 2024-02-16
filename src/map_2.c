@@ -136,7 +136,7 @@ int r, float ra)
 	float plan = ceil(heigth / (2 * 0.57735));/* tan(30) = 0,57735 */
 	float lineH = ceil(((float)TILE_SIZE / *disT) * plan);
 
-	float lineO = 350 - lineH / 2;/* Line offsets */
+	float lineO = (float)(SCREEN_HEIGHT / 2) - lineH / 2;/* Line offsets */
 
 	if (SDL_SetRenderDrawColor(renderer, 113, 113, 113, 255) != 0)
 	{
@@ -144,7 +144,7 @@ int r, float ra)
 		SDL_GetError());
 		exit(1);
 	}
-	drawThickLine(renderer, r * 20, lineO, r * 20, lineH + lineO, 20);
+	drawThickLine(renderer, r * 19, lineO, r * 19, lineH + lineO, 19);
 	if (SDL_SetRenderDrawColor(renderer, 33, 171, 74, 255) != 0)
 	{
 		fprintf(stderr, "Error: SDL_SetRenderDrawColor > %s\n", SDL_GetError());
