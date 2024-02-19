@@ -14,6 +14,7 @@
 #define P2 (PI / 2)
 #define P3 (3 * (PI / 2))
 #define DR 0.0174533/* One degree in radians */
+#define PA 0.00092999
 
 SDL_Renderer *initializeSDL();
 void drawThickLine(SDL_Renderer *renderer, int x1, int y1, int x2,

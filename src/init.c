@@ -15,7 +15,7 @@ SDL_Renderer *initializeSDL()
 				SDL_GetError());
 		return (NULL);
 	}
-	window = SDL_CreateWindow("SDL Player Example",
+	window = SDL_CreateWindow("Portfolio project",
 							  SDL_WINDOWPOS_UNDEFINED,
 							  SDL_WINDOWPOS_UNDEFINED,
 							  SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);

@@ -23,7 +23,7 @@ SDL_Point player, int map[])
 	drawFloorAndSky(renderer);
 	ra = playerAngle - DR * 30;
 	ra = moveAngle(ra);
-	for (r = 0; r < 60; r++)
+	for (r = 0; r < SCREEN_WIDTH; r++)
 	{
 		/* Check Horizontal lines */
 		dof = 0;
@@ -51,7 +51,7 @@ SDL_Point player, int map[])
 		player.y + sqrt(TILE_SIZE) / 2, rx, ry);
 
 		draw3dWalls(renderer, playerAngle, &disT, r, ra);		
-		ra += DR;
+		ra += PA;
 		ra = moveAngle(ra);
 	}
 }

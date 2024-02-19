@@ -128,7 +128,7 @@ float hx, float hy, float vx, float vy)
 void draw3dWalls(SDL_Renderer *renderer, float pa, int *disT,
 int r, float ra)
 {
-	float ca = pa - ra;
+	float ca = pa - ra + ra;
 
 	ca = moveAngle(ca);
 	*disT = (*disT) * cos(ca);/* fix fisheye */
@@ -144,7 +144,7 @@ int r, float ra)
 		SDL_GetError());
 		exit(1);
 	}
-	drawThickLine(renderer, r * 19, lineO, r * 19, lineH + lineO, 19);
+	drawThickLine(renderer, r, lineO, r, lineH + lineO, 1);
 	if (SDL_SetRenderDrawColor(renderer, 33, 171, 74, 255) != 0)
 	{
 		fprintf(stderr, "Error: SDL_SetRenderDrawColor > %s\n", SDL_GetError());
