@@ -13,6 +13,6 @@ To compile this project we need to use gcc and also link the sdl lib to our proj
 On this file we have a target ``all`` allow us to build all our `*.c` files to `.o` files.
 ****
 After that we need to run the [prog](./prog) file to see the render of our project.
-![render](./assets/renderr.png)
+![render](./assets/render.png)
 ## Use
 To move the player you just need to press to the key `w` or `s` and also use `a` or `d` to change the direction.
