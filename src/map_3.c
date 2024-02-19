@@ -50,7 +50,7 @@ SDL_Point player, int map[])
 		SDL_RenderDrawLine(renderer, player.x + sqrt(TILE_SIZE) / 2,
 		player.y + sqrt(TILE_SIZE) / 2, rx, ry);
 
-		draw3dWalls(renderer, playerAngle, &disT, r, ra);		
+		draw3dWalls(renderer, playerAngle, &disT, r, ra);
 		ra += PA;
 		ra = moveAngle(ra);
 	}

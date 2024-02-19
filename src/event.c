@@ -46,6 +46,8 @@ int handleEvent(SDL_Point *player)
  * @playerAngle: The player angle
  * \param playerDirection The move direction of the player
  * @playerDirection: The player direction
+ * \param map The map of the game
+ * @map: The map of the game
  * Return: 1 to quit and 0 if w,s,a or d is press
  * \returns 1 if the SDL_QUIT is handle and 0 if
  * w,s,a or d is KEY_DOWN
@@ -62,6 +64,9 @@ int handleEventWithAngle(SDL_Point *player, float *playerAngle,
 			return (1);
 		else if (event.type == SDL_KEYDOWN)
 		{
+			mx = (int)((player->x + playerDirection->x) / TILE_SIZE);
+			my = (int)((player->y + playerDirection->y) / TILE_SIZE);
+			mp = my * MAP_WIDTH + mx;
 			switch (event.key.keysym.sym)
 			{
 				case SDLK_a:
@@ -79,9 +84,6 @@ int handleEventWithAngle(SDL_Point *player, float *playerAngle,
 				playerDirection->y = sin(*playerAngle) * 3;
 				break;
 				case SDLK_w:
-				mx = (int)((player->x + playerDirection->x) / TILE_SIZE);
-				my = (int)((player->y + playerDirection->y) / TILE_SIZE);
-				mp = my * MAP_WIDTH + mx;
 				if (mp > 0 && mp < MAP_SIZE && map[mp] == 0)
 				{
 					player->x += playerDirection->x;
@@ -89,9 +91,6 @@ int handleEventWithAngle(SDL_Point *player, float *playerAngle,
 				}
 				break;
 				case SDLK_s:
-				mx = (int)((player->x + playerDirection->x) / TILE_SIZE);
-				my = (int)((player->y + playerDirection->y) / TILE_SIZE);
-				mp = my * MAP_WIDTH + mx;
 				if (mp > 0 && mp < MAP_SIZE && map[mp] == 0)
 				{
 					player->x -= playerDirection->x;
