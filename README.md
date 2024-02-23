@@ -1,7 +1,7 @@
 # ALX SE End of the fondation project: Default Maze project
 ![render](./assets/renderer.png)
-# Build your portfolio project (Week 2): MVP Complete
-# Plan
+This project is aim to be the end of the fondation in the ALX SE training.
+## What you will be discovered in this project
 1. [Requirements](#Requirements)
 2. [Installation](#Installation)
 3. [Compilation](#Compilation)
@@ -15,10 +15,5 @@ To compile this project we need to use gcc and also link the sdl lib to our proj
 On this file we have a target ``all`` allow us to build all our `*.c` files to `.o` files.
 ****
 After that we need to run the [prog](./prog) file to see the render of our project.
-![render](./assets/render.png)
 ## Use
-To move the player you just need to press to the key `w` or `s` and also use `a` or `d` to change the direction.
-
-
-https://github.com/Soulsaw/portfolio/assets/87091389/989c1f73-ab66-46bd-89aa-376e408a64e7
-
+In this project you can easly move the player by taping to the touch `w` to move ``forward`` and `s` to move ``backward`` and also to change the direction of the player we use `a` to looking left and `d` to looking `rigth`
