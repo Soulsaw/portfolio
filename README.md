@@ -1,5 +1,5 @@
 # ALX SE End of the fondation project: Default Maze project
-
+![render](./assets/renderer.png)
 # Build your portfolio project (Week 2): MVP Complete
 # Plan
 1. [Requirements](#Requirements)
