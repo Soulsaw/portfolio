@@ -17,4 +17,4 @@ On this file we have a target ``all`` allow us to build all our `*.c` files to `
 After that we need to run the [prog](./prog) file to see the render of our project.
 ## Use
 In this project you can easly move the player by taping to the touch `w` to move ``forward`` and `s` to move ``backward`` and also to change the direction of the player we use `a` to looking left and `d` to looking `rigth`
-[![Overview](https://youtu.be/WatFHccBK8E)](Youtube)
+[![Overview](./assets/renderer.png)](https://youtu.be/WatFHccBK8E)
