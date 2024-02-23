@@ -1,7 +1,7 @@
 # ALX SE End of the fondation project: Default Maze project
 ![render](./assets/renderer.png)
-# Build your portfolio project (Week 2): MVP Complete
-# Plan
+This project is aim to be the end of the fondation in the ALX SE training.
+## What you will be discovered in t
 1. [Requirements](#Requirements)
 2. [Installation](#Installation)
 3. [Compilation](#Compilation)
